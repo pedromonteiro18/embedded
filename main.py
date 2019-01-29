@@ -1,6 +1,8 @@
 import smbus  # import sudo apt-get install python3-smbus i2c-tools
 from time import sleep  # import sleep
-import math 
+import math
+import json
+import paho.mqtt.client as mqtt
  
 # some MPU6050 Registers and their Address
 Register_A = 0  # Address of Configuration register A
@@ -68,3 +70,8 @@ while True:
 
     print("Heading Angle = %d°" % heading_angle)
     sleep(1)
+
+    payload = json.dumps( {
+        "Heading Angle ": heading_angle
+    })
+
