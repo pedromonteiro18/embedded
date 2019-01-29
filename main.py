@@ -72,7 +72,7 @@ while True:
     print("Heading Angle = %d°" % heading_angle, "Time: ", datetime.now())
     sleep(1)
 
-    payload = json.dumps( {
-        "Heading Angle ": heading_angle, "Time": datetime.now()
-    })
+    # payload = json.dumps({
+    #     "Heading Angle ": heading_angle, "Time": datetime.now()
+    # })
 
