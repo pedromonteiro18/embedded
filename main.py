@@ -3,6 +3,7 @@ from time import sleep  # import sleep
 import math
 import json
 import paho.mqtt.client as mqtt
+from datetime import datetime
  
 # some MPU6050 Registers and their Address
 Register_A = 0  # Address of Configuration register A
@@ -68,10 +69,10 @@ while True:
     # convert into angle
     heading_angle = int(heading * 180 / pi)
 
-    print("Heading Angle = %d°" % heading_angle)
+    print("Heading Angle = %d°" % heading_angle, "Time: %d " % datetime.now())
     sleep(1)
 
     payload = json.dumps( {
-        "Heading Angle ": heading_angle
+        "Heading Angle ": heading_angle, "Time": datetime.now()
     })
 
