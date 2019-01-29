@@ -69,7 +69,7 @@ while True:
     # convert into angle
     heading_angle = int(heading * 180 / pi)
 
-    print("Heading Angle = %d°" % heading_angle, "Time: ", datetime.now())
+    print("Heading Angle = %d°" % heading_angle,"   ", "DateTime: ", datetime.now())
     sleep(1)
 
     # payload = json.dumps({
