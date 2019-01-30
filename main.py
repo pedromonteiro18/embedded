@@ -4,6 +4,7 @@ import math
 import json
 import paho.mqtt.client as mqtt
 import network
+import machine
 
 ap_if = network.WLAN(network.AP_IF)
 ap_if.active(False)
