@@ -4,6 +4,9 @@ import math
 import json
 import paho.mqtt.client as mqtt
 from datetime import datetime
+import network
+
+
  
 # some MPU6050 Registers and their Address
 Register_A = 0  # Address of Configuration register A
@@ -75,4 +78,10 @@ while True:
     payload = json.dumps({
         "Heading Angle ": heading_angle, "Time": datetime.now()
     })
+
+    ap_if = network.WLAN(network.AP_IF)
+    ap_if.active(False)
+    sta_if = network.WLAN(network.STA_IF)
+    sta_if.active(True)
+    sta_if.connect('EEERover', 'exhibition')
 
