@@ -4,14 +4,32 @@ import math
 import json
 import paho.mqtt.client as mqtt
 import network
-import machine
+import sys
 
-ap_if = network.WLAN(network.AP_IF)
-ap_if.active(False)
-sta_if = network.WLAN(network.STA_IF)
-sta_if.active(True)
-sta_if.connect('EEERover', 'exhibition')
-sta_if.isconnected()
+#ap_if = network.WLAN(network.AP_IF)
+#ap_if.active(False)
+#sta_if = network.WLAN(network.STA_IF)
+#sta_if.active(True)
+#sta_if.connect('EEERover', 'exhibition')
+#sta_if.isconnected()
+client = mqtt.Client()
+client.tls_set(ca_certs="mosquitto.org.crt", certfile="client.crt",keyfile="client.key")
+client.connect("test.mosquitto.org",port=8884)
+if (client.connect("test.mosquitto.org",port=8884) == 0):
+	print("Connection succesfull")
+else:
+	print("Error connection unseccesfull")
+	print(mqtt.error_string(RETURN_CODE))
+	sys.exit(1)
+MSG_INFO = client.publish("IC.embedded/patriots/test","hello")
+mqtt.error_string(MSG_INFO.rc) #MSG_INFO is result of publish()
+
+def on_message(client, userdata, message) :
+	print("Received message:{} on topic {}".format(message.payload, message.topic))
+
+client.on_message = on_message
+client.subscribe("IC.embedded/patriots/test")
+client.loop()
 
 # some MPU6050 Registers and their Address
 Register_A = 0  # Address of Configuration register A
