@@ -15,7 +15,7 @@ else:
 	print("Error connection unseccesfull")
 	print(mqtt.error_string(RETURN_CODE))
 	sys.exit(1)
-MSG_INFO = client.publish("IC.embedded/patriots/test","hello")
+MSG_INFO = client.publish("IC.embedded/patriots/test","Message from pi")
 mqtt.error_string(MSG_INFO.rc) #MSG_INFO is result of publish()
 
 def on_message(client, userdata, message) :
