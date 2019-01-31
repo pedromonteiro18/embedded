@@ -7,8 +7,8 @@ import sys
 
 client = mqtt.Client()
 client.tls_set(ca_certs="mosquitto.org.crt", certfile="client.crt", keyfile="client.key")
-client.connect("test.mosquitto.org", port=8080) #8884
-if client.connect("test.mosquitto.org", port=8080) == 0:
+client.connect("test.mosquitto.org", port=8884)
+if client.connect("test.mosquitto.org", port=8884) == 0:
     print("Connection successful")
 else:
     print("Error connection unsuccessful")
