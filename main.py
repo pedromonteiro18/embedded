@@ -92,6 +92,7 @@ while True:
 
     print("Heading Angle = %d°" % heading_angle)
     sleep(1)
+    client.on_message = on_message
 
     payload = json.dumps({
         "Heading Angle ": heading_angle
