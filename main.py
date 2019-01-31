@@ -6,12 +6,6 @@ import paho.mqtt.client as mqtt
 import network
 import sys
 
-#ap_if = network.WLAN(network.AP_IF)
-#ap_if.active(False)
-#sta_if = network.WLAN(network.STA_IF)
-#sta_if.active(True)
-#sta_if.connect('EEERover', 'exhibition')
-#sta_if.isconnected()
 client = mqtt.Client()
 client.tls_set(ca_certs="mosquitto.org.crt", certfile="client.crt",keyfile="client.key")
 client.connect("test.mosquitto.org",port=8884)
