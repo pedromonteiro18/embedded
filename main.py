@@ -3,23 +3,24 @@ from time import sleep  # import sleep
 import math
 import json
 import paho.mqtt.client as mqtt
-import network
 import sys
 
 client = mqtt.Client()
-client.tls_set(ca_certs="mosquitto.org.crt", certfile="client.crt",keyfile="client.key")
-client.connect("test.mosquitto.org",port=8884)
-if (client.connect("test.mosquitto.org",port=8884) == 0):
-	print("Connection succesfull")
+client.tls_set(ca_certs="mosquitto.org.crt", certfile="client.crt", keyfile="client.key")
+client.connect("test.mosquitto.org", port=8884)
+if client.connect("test.mosquitto.org", port=8884) == 0:
+    print("Connection succesfull")
 else:
-	print("Error connection unseccesfull")
-	print(mqtt.error_string(RETURN_CODE))
-	sys.exit(1)
-MSG_INFO = client.publish("IC.embedded/patriots/test","Message from pi")
-mqtt.error_string(MSG_INFO.rc) #MSG_INFO is result of publish()
+    print("Error connection unseccesfull")
+    print(mqtt.error_string(RETURN_CODE))
+    sys.exit(1)
+MSG_INFO = client.publish("IC.embedded/patriots/test", "Message from pi")
+mqtt.error_string(MSG_INFO.rc)  # MSG_INFO is result of publish()
 
-def on_message(client, userdata, message) :
-	print("Received message:{} on topic {}".format(message.payload, message.topic))
+
+def on_message(client, userdata, message):
+    print("Received message:{} on topic {}".format(message.payload, message.topic))
+
 
 client.on_message = on_message
 client.subscribe("IC.embedded/patriots/test")
@@ -57,7 +58,7 @@ def read_raw_data(addr):
     value = ((high << 8) | low)
 
     # to get signed value from module
-    if (value > 32768):
+    if value > 32768:
         value = value - 65536
     return value
 
@@ -79,11 +80,11 @@ while True:
     heading = math.atan2(y, x) + declination
 
     # Due to declination check for >360 degree
-    if (heading > 2 * pi):
+    if heading > 2 * pi:
         heading = heading - 2 * pi
 
     # check for sign
-    if (heading < 0):
+    if heading < 0:
         heading = heading + 2 * pi
 
     # convert into angle
@@ -95,5 +96,3 @@ while True:
     payload = json.dumps({
         "Heading Angle ": heading_angle
     })
-
-
