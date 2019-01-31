@@ -9,9 +9,9 @@ client = mqtt.Client()
 client.tls_set(ca_certs="mosquitto.org.crt", certfile="client.crt", keyfile="client.key")
 client.connect("test.mosquitto.org", port=8884)
 if client.connect("test.mosquitto.org", port=8884) == 0:
-    print("Connection succesfull")
+    print("Connection successful")
 else:
-    print("Error connection unseccesfull")
+    print("Error connection unsuccessful")
     print(mqtt.error_string(RETURN_CODE))
     sys.exit(1)
 MSG_INFO = client.publish("IC.embedded/patriots/test", "Message from pi")
