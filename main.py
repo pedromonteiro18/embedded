@@ -27,7 +27,7 @@ def on_message(client, userdata, message):
 
 
 client.on_message = on_message
-client.subscribe("IC.embedded/patriots/test")
+client.subscribe("IC.embedded/patriots/#")
 client.loop()
 
 # some MPU6050 Registers and their Address
