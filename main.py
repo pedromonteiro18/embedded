@@ -7,8 +7,8 @@ import sys
 
 client = mqtt.Client()
 client.tls_set(ca_certs="mosquitto.org.crt", certfile="client.crt", keyfile="client.key")
-client.connect("test.mosquitto.org", port=8884)
-if client.connect("test.mosquitto.org", port=8884) == 0:
+client.connect("test.mosquitto.org", port=8080)
+if client.connect("test.mosquitto.org", port=8080) == 0:
     print("Connection successful")
 else:
     print("Error connection unsuccessful")
@@ -23,7 +23,7 @@ def on_message(client, userdata, message):
 
 
 client.on_message = on_message
-client.subscribe("IC.embedded/patriots/test")
+client.subscribe("IC.embedded/patriots/#")
 client.loop()
 
 # some MPU6050 Registers and their Address
