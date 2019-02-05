@@ -18,12 +18,12 @@ MSG_INFO = client.publish("IC.embedded/patriots/test", "Message from pi")
 mqtt.error_string(MSG_INFO.rc)  # MSG_INFO is result of publish()
 
 
-# def on_message(client, userdata, message):
-#     print("Received message:{} on topic {}".format(message.payload, message.topic))
-
 def on_message(client, userdata, message):
-    print("Received message '" + str(message.payload) + "' on topic '"
-    + message.topic + "' with QoS " + str(message.qos))
+    print("Received message:{} on topic {}".format(message.payload, message.topic))
+
+# def on_message(client, userdata, message):
+#     print("Received message '" + str(message.payload) + "' on topic '"
+#     + message.topic + "' with QoS " + str(message.qos))
 
 
 client.on_message = on_message
