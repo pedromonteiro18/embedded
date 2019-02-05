@@ -27,7 +27,8 @@ def on_message(client, userdata, message):
 
 
 client.on_message = on_message
-print(client.on_message)
+print("PrintTest")
+print("client.on_message is: " + client.on_message)
 client.subscribe("IC.embedded/patriots/#")
 client.loop()
 
