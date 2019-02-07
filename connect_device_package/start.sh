@@ -1,4 +1,4 @@
-from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
+from AWSIoTPythonSDK import AWSIoTMQTTClient
 # stop script on error
 set -e
 
