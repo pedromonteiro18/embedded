@@ -27,7 +27,7 @@ def on_message(client, userdata, message):
 
 
 client.on_message = on_message
-client.subscribe("IC.embedded/patriots/#")
+client.subscribe("IC.embedded/patriots/tmp")
 client.loop()
 
 # some MPU6050 Registers and their Address
@@ -76,6 +76,8 @@ print(" Reading Heading Angle")
 
 while True:
 
+    client.loop()
+    
     # Read Accelerometer raw value
     x = read_raw_data(X_axis_H)
     z = read_raw_data(Z_axis_H)
