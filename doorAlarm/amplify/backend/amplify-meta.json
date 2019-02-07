@@ -1,0 +1,70 @@
+{
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "doorlarm-20190207134057-authRole",
+			"UnauthRoleArn": "arn:aws:iam::482397319362:role/doorlarm-20190207134057-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::482397319362:role/doorlarm-20190207134057-authRole",
+			"Region": "eu-west-1",
+			"DeploymentBucketName": "doorlarm-20190207134057-deployment",
+			"UnauthRoleName": "doorlarm-20190207134057-unauthRole",
+			"StackName": "doorlarm-20190207134057",
+			"StackId": "arn:aws:cloudformation:eu-west-1:482397319362:stack/doorlarm-20190207134057/fb9bc6e0-2add-11e9-bb31-0aaf98d2f8ea"
+		}
+	},
+	"auth": {
+		"cognito8e7a701e": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/doorlarm-20190207134057-deployment/amplify-cfn-templates/auth/cognito8e7a701e-cloudformation-template.yml",
+				"logicalId": "authcognito8e7a701e"
+			},
+			"lastPushTimeStamp": "2019-02-07T14:11:04.287Z",
+			"output": {
+				"IdentityPoolId": "eu-west-1:55c82dc7-817a-47f9-b4a1-0e5a8677295a",
+				"IdentityPoolName": "dooralarm_identitypool_6a29f8a2",
+				"AppClientSecret": "1mq1i4m01uih4p6ue7ni9q2uk1ds4mquonv8beih4i9usjloa0h5",
+				"UserPoolId": "eu-west-1_akqDiMTmR",
+				"AppClientIDWeb": "414s3uh3p2c9rvpmfdhqb25dhn",
+				"AppClientID": "6ssf3ha8gskc24iv8i9uandcd",
+				"UserPoolName": "cognito8e7a701e_userpool_8d52831d"
+			},
+			"lastPushDirHash": "dd4kdT9Lek3J+9SkRLm/TwVaclA="
+		}
+	},
+	"analytics": {
+		"dooralarm": {
+			"service": "Pinpoint",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/doorlarm-20190207134057-deployment/amplify-cfn-templates/analytics/pinpoint-cloudformation-template.json",
+				"logicalId": "analyticsdooralarm"
+			},
+			"lastPushTimeStamp": "2019-02-07T14:11:04.283Z",
+			"output": {
+				"appName": "dooralarm",
+				"Region": "eu-west-1",
+				"Id": "c57f001bf2694ecf8e9065950a128b18"
+			},
+			"lastPushDirHash": "tvCMMCJXbJT92wo6l2h+6sbIsEs="
+		}
+	},
+	"hosting": {
+		"S3AndCloudFront": {
+			"service": "S3AndCloudFront",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/doorlarm-20190207134057-deployment/amplify-cfn-templates/hosting/template.json",
+				"logicalId": "hostingS3AndCloudFront"
+			},
+			"lastPushTimeStamp": "2019-02-07T14:11:04.285Z",
+			"output": {
+				"S3BucketSecureURL": "https://doorlarm-20190207135300-hostingbucket.s3.amazonaws.com",
+				"WebsiteURL": "http://doorlarm-20190207135300-hostingbucket.s3-website-eu-west-1.amazonaws.com",
+				"Region": "eu-west-1",
+				"HostingBucketName": "doorlarm-20190207135300-hostingbucket"
+			},
+			"lastPushDirHash": "CrHXjhMySDIkNRLE0giYgyuSVt8="
+		}
+	}
+}

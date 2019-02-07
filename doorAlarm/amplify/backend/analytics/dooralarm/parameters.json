@@ -1,0 +1,11 @@
+{
+    "appName": "dooralarm",
+    "roleName": "pinpointLambdaRolea732464c",
+    "cloudWatchPolicyName": "cloudWatchPolicya732464c",
+    "pinpointPolicyName": "pinpointPolicya732464c",
+    "authPolicyName": "pinpoint_amplify_a732464c",
+    "unauthPolicyName": "pinpoint_amplify_a732464c",
+    "authRoleName": "doorlarm-20190207134057-authRole",
+    "unauthRoleName": "doorlarm-20190207134057-unauthRole",
+    "IAMPrefix": "482397319362"
+}

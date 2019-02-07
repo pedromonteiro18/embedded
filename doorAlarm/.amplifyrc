@@ -1,0 +1,14 @@
+{
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "doorlarm-20190207134057-authRole",
+            "UnauthRoleArn": "arn:aws:iam::482397319362:role/doorlarm-20190207134057-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::482397319362:role/doorlarm-20190207134057-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "doorlarm-20190207134057-deployment",
+            "UnauthRoleName": "doorlarm-20190207134057-unauthRole",
+            "StackName": "doorlarm-20190207134057",
+            "StackId": "arn:aws:cloudformation:eu-west-1:482397319362:stack/doorlarm-20190207134057/fb9bc6e0-2add-11e9-bb31-0aaf98d2f8ea"
+        }
+    }
+}
