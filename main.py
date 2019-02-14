@@ -5,6 +5,11 @@ import json
 import paho.mqtt.client as mqtt
 import sys
 import RPi.GPIO as GPIO
+from twilio.rest import Client
+
+account = "AC2650e854a75522a55556c046e458d3e3"
+token = "5c316eabc51ae0d01886182a30633f55"
+clientPhone = Client(account, token)
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(18, GPIO.OUT)
@@ -124,6 +129,7 @@ while True:
     if abs(heading_angle - old_heading) > 10 and old_heading != 0 and warning_sent == False:
         warning_sent = True
         MSG_INFO = client.publish("IC.embedded/patriots/test", "Door Opened")
+        message = clientPhone.messages.create(to="07767292464", from_="+447403922805", body="Door Opened!")
         mqtt.error_string(MSG_INFO.rc)  # MSG_INFO is result of publish()
         p = GPIO.PWM(18, 10000000000000)
         p.start(50)
@@ -140,3 +146,9 @@ while True:
     payload = json.dumps({
         "Heading Angle ": heading_angle
     })
+
+
+
+
+
+
