@@ -129,7 +129,9 @@ while True:
     if abs(heading_angle - old_heading) > 10 and old_heading != 0 and warning_sent == False:
         warning_sent = True
         MSG_INFO = client.publish("IC.embedded/patriots/tmp", "Door Opened")
-        message = clientPhone.messages.create(to="07767292464", from_="+447403922805", body="Door Opened!")
+        num = ['07767292464', '07452900152', '07508997292']
+        for number in num:
+            message = clientPhone.messages.create(to=number, from_="+447403922805", body="Door Opened!")
         mqtt.error_string(MSG_INFO.rc)  # MSG_INFO is result of publish()
         p = GPIO.PWM(18, 10000000000000)
         p.start(50)
