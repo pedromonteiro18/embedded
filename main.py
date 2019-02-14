@@ -32,7 +32,7 @@ else:
     print("Error connection unsuccessful")
     print(mqtt.error_string(RETURN_CODE))
     sys.exit(1)
-MSG_INFO = client.publish("IC.embedded/patriots/test", "Door Locked")
+MSG_INFO = client.publish("IC.embedded/patriots/tmp", "Door Locked")
 mqtt.error_string(MSG_INFO.rc)  # MSG_INFO is result of publish()
 
 
@@ -55,7 +55,7 @@ def on_message(client, userdata, message):
 
 
 client.on_message = on_message
-client.subscribe("IC.embedded/patriots/tmp")
+client.subscribe("IC.embedded/patriots/test")
 client.loop()
 
 # some MPU6050 Registers and their Address
@@ -128,7 +128,7 @@ while True:
 
     if abs(heading_angle - old_heading) > 10 and old_heading != 0 and warning_sent == False:
         warning_sent = True
-        MSG_INFO = client.publish("IC.embedded/patriots/test", "Door Opened")
+        MSG_INFO = client.publish("IC.embedded/patriots/tmp", "Door Opened")
         message = clientPhone.messages.create(to="07767292464", from_="+447403922805", body="Door Opened!")
         mqtt.error_string(MSG_INFO.rc)  # MSG_INFO is result of publish()
         p = GPIO.PWM(18, 10000000000000)
