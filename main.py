@@ -4,21 +4,44 @@ import math
 import json
 import paho.mqtt.client as mqtt
 import sys
+import RPi.GPIO as GPIO
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(18, GPIO.OUT)
+
+warning_sent = False
 
 client = mqtt.Client()
-client.tls_set(ca_certs="mosquitto.org.crt", certfile="client.crt", keyfile="client.key")
-client.connect("test.mosquitto.org", port=8884)
+client.tls_set(ca_certs="/home/pi/embedded/mosquitto.org.crt", certfile="/home/pi/embedded/client.crt", keyfile="/home/pi/embedded/client.key")
+connected=False
+while (not connected):
+	try:
+		client.connect("test.mosquitto.org", port=8884)
+		connected=True
+	except:
+		print("connection failed trying again")
+		
 if client.connect("test.mosquitto.org", port=8884) == 0:
     print("Connection successful")
 else:
     print("Error connection unsuccessful")
     print(mqtt.error_string(RETURN_CODE))
     sys.exit(1)
-MSG_INFO = client.publish("IC.embedded/patriots/test", "Message from pi")
+MSG_INFO = client.publish("IC.embedded/patriots/test", "Door Locked")
 mqtt.error_string(MSG_INFO.rc)  # MSG_INFO is result of publish()
 
 
 def on_message(client, userdata, message):
+    message_string = str(message.payload)
+    message_string = message_string[2:len(message_string)-1]
+    if message_string == "Active":
+        global warning_sent
+        warning_sent = False
+        print("Hello")
+    elif message_string == "Not Active":
+        global warning_sent
+        warning_sent = True
+        print("not Active")
     print("Received message:{} on topic {}".format(message.payload, message.topic))
 
 # def on_message(client, userdata, message):
@@ -74,6 +97,8 @@ Magnetometer_Init()  # initialize HMC5883L magnetometer
 
 print(" Reading Heading Angle")
 
+old_heading = 0
+
 while True:
 
     client.loop()
@@ -96,7 +121,20 @@ while True:
     # convert into angle
     heading_angle = int(heading * 180 / pi)
 
+    if abs(heading_angle - old_heading) > 10 and old_heading != 0 and warning_sent == False:
+        warning_sent = True
+        MSG_INFO = client.publish("IC.embedded/patriots/test", "Door Opened")
+        mqtt.error_string(MSG_INFO.rc)  # MSG_INFO is result of publish()
+        p = GPIO.PWM(18, 10000000000000)
+        p.start(50)
+        sleep(6)
+        p.stop()
+        GPIO.cleanup()
+
     print("Heading Angle = %d°" % heading_angle)
+    
+    old_heading = heading_angle
+
     sleep(1)
 
     payload = json.dumps({
