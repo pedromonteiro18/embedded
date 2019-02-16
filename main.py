@@ -7,15 +7,18 @@ import sys
 import RPi.GPIO as GPIO
 from twilio.rest import Client
 
+#Credentials for connecting to SMS API
 account = "AC2650e854a75522a55556c046e458d3e3"
 token = "5c316eabc51ae0d01886182a30633f55"
 clientPhone = Client(account, token)
 
+#Setting up the output port for alarm speaker
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(18, GPIO.OUT)
 
 warning_sent = False
 
+#Looping to connect to the MQTT Broker as it would sometimes not connect.
 client = mqtt.Client()
 client.tls_set(ca_certs="/home/pi/embedded/mosquitto.org.crt", certfile="/home/pi/embedded/client.crt", keyfile="/home/pi/embedded/client.key")
 connected=False
@@ -25,35 +28,32 @@ while (not connected):
 		connected=True
 	except:
 		print("connection failed trying again")
-		
+
+#Cheching if connection is succesfull again
 if client.connect("test.mosquitto.org", port=8884) == 0:
     print("Connection successful")
 else:
     print("Error connection unsuccessful")
     print(mqtt.error_string(RETURN_CODE))
     sys.exit(1)
+
+#We initialize the door to be Locked on start up
 MSG_INFO = client.publish("IC.embedded/patriots/tmp", "Door Locked")
 mqtt.error_string(MSG_INFO.rc)  # MSG_INFO is result of publish()
 
-
+#Reading the incoming message to see if the alarm system should be Active or Not
 def on_message(client, userdata, message):
     message_string = str(message.payload)
     message_string = message_string[2:len(message_string)-1]
     if message_string == "Active":
         global warning_sent
         warning_sent = False
-        print("Hello")
     elif message_string == "Not Active":
         global warning_sent
         warning_sent = True
-        print("not Active")
     print("Received message:{} on topic {}".format(message.payload, message.topic))
 
-# def on_message(client, userdata, message):
-#     print("Received message '" + str(message.payload) + "' on topic '"
-#     + message.topic + "' with QoS " + str(message.qos))
-
-
+#Subscribing to MQTT Broker
 client.on_message = on_message
 client.subscribe("IC.embedded/patriots/test")
 client.loop()
@@ -104,10 +104,11 @@ print(" Reading Heading Angle")
 
 old_heading = 0
 
+#While loop that constantly checks if door is being opened
 while True:
 
     client.loop()
-    
+
     # Read Accelerometer raw value
     x = read_raw_data(X_axis_H)
     z = read_raw_data(Z_axis_H)
@@ -126,10 +127,17 @@ while True:
     # convert into angle
     heading_angle = int(heading * 180 / pi)
 
+	#Cheching if the alarm system is active and if so detecting if the door is being Opened
+	#If the door is Opened we send a meesage to the broker which the IOS app picks up
+	#and send SMS to all numbers connected to the device using an API
+	#We also set the alarm to go off for 6 seconds
+	#Once the alarm goes off it will not send another alarm until
+	#resetting the system by turning on and off the system, which can be done with the app
     if abs(heading_angle - old_heading) > 10 and old_heading != 0 and warning_sent == False:
         warning_sent = True
+		#Publishing that the door was opened to the MQTT broker which is then picked up by IOS app
         MSG_INFO = client.publish("IC.embedded/patriots/tmp", "Door Opened")
-        num = ['07767292464', '07452900152', '07508997292']
+        num = ['077672#####', '074529#####', '075089#####']#For Privacy reasons we have changed the numbers here
         for number in num:
             message = clientPhone.messages.create(to=number, from_="+447403922805", body="Door Opened!")
         mqtt.error_string(MSG_INFO.rc)  # MSG_INFO is result of publish()
@@ -140,7 +148,7 @@ while True:
         GPIO.cleanup()
 
     print("Heading Angle = %d°" % heading_angle)
-    
+
     old_heading = heading_angle
 
     sleep(1)
@@ -148,9 +156,3 @@ while True:
     payload = json.dumps({
         "Heading Angle ": heading_angle
     })
-
-
-
-
-
-
