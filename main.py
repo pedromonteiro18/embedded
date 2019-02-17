@@ -58,7 +58,7 @@ client.on_message = on_message
 client.subscribe("IC.embedded/patriots/test")
 client.loop()
 
-# some MPU6050 Registers and their Address
+# Initialising MPU6050 Registers 
 Register_A = 0  # Address of Configuration register A
 Register_B = 0x01  # Address of configuration register B
 Register_mode = 0x02  # Address of mode register
@@ -104,7 +104,7 @@ print(" Reading Heading Angle")
 
 old_heading = 0
 
-#While loop that constantly checks if door is being opened
+#While loop that constantly checks if door is opened
 while True:
 
     client.loop()
@@ -127,10 +127,10 @@ while True:
     # convert into angle
     heading_angle = int(heading * 180 / pi)
 
-	#Cheching if the alarm system is active and if so detecting if the door is being Opened
-	#If the door is Opened we send a meesage to the broker which the IOS app picks up
+	#Checking if the alarm system is active and if so detecting if the door is being Opened
+	#If the door is Opened we send a meesage to the broker which the IOS app recieves 
 	#and send SMS to all numbers connected to the device using an API
-	#We also set the alarm to go off for 6 seconds
+	#We also set the alarm to go off for 6 seconds (for demonstration purposes)
 	#Once the alarm goes off it will not send another alarm until
 	#resetting the system by turning on and off the system, which can be done with the app
     if abs(heading_angle - old_heading) > 10 and old_heading != 0 and warning_sent == False:
