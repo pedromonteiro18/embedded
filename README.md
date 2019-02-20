@@ -2,4 +2,6 @@
 You can access the marketing website thorugh this link: https://winac.github.io/embeddedmarketing/
 The code for this website can be found here: https://github.com/winac/embeddedmarketing
 
-You will find the code that was used for the demo on the pi here as well as the code for our IOS app.
+You will find the code that was used for the demo on the pi in main.py.
+
+As the iOS app file was too large to upload to github, it has been uploaded to google drive and can be viewed via this link: https://drive.google.com/open?id=1-KKilFqjN_Y8ZCmnRgIzecQJSIgNOGAA
