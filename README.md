@@ -1,5 +1,5 @@
 # embedded
-You can access the marketing website thorugh this link: https://winac.github.io/embeddedmarketing/
+You can access the marketing website thorugh this link: https://winac.github.io/embeddedmarketing/ or this link: http://patriots.ml
 The code for this website can be found here: https://github.com/winac/embeddedmarketing
 
 You will find the code that was used for the demo on the pi in main.py.
